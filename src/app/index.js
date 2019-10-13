@@ -3,13 +3,13 @@ const router = require('routing')
 const ResponseTime = require('koa-response-time')
 const Morgan = require('koa-morgan')
 const db = require('database')
-const BodyParser = require("koa-bodyparser");
-const serve = require("koa-static");
+const BodyParser = require('koa-bodyparser');
+const serve = require('koa-static');
 const cors = require('koa-cors');
-const mount = require("koa-mount");
-const HttpStatus = require("http-status");
-const Logger = require("koa-logger");
-
+const mount = require('koa-mount');
+const HttpStatus = require('http-status');
+const Logger = require('koa-logger');
+const send = require('koa-send')
 
 
 const app = new Koa()
@@ -21,7 +21,16 @@ app.use(BodyParser());
 app.use(Logger());
 app.use(cors());
 
+//const static_pages = new Koa();
+//static_pages.use(serve(__dirname + "/frontend/build")); //serve the build directory
+//app.use(mount("/", static_pages));
 
+app.use(serve('frontend/build'));
+
+//app.use(function* index() {
+//    console.log('index page');
+//    yield send(this, 'frontend/build/index.html');
+//});
 
 exports.start = async function () {
   try {

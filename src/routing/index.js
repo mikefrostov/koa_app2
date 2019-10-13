@@ -4,7 +4,6 @@ const HttpStatus = require("http-status");
 
 
 const router = Router()
-router.get('/', async ctx => { ctx.status = 200 })
 
 
 router.get("/book",async (ctx,next)=>{
