@@ -35,7 +35,7 @@ router.get('/posts/:userid', async ctx => {
     userid = ctx.params.userid;
     var queryConfig = {
     text: 'SELECT * FROM posts WHERE userid = $1;',
-    values: ['1']
+    values: [userid]
   };
       result = await database.query(queryConfig).then(c => c.rows);
     posts = [];
