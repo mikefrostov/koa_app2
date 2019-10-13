@@ -17,7 +17,28 @@ router.get('/users', async ctx => {
     ctx.body = users;
 });
 
-//router.post
+router.get('/users/:userid', async ctx => {
+    userid = ctx.params.userid;
+    var queryConfig = {
+    text: 'SELECT * FROM users WHERE id = $1;',
+    values: [userid]
+  };
+      result = await database.query(queryConfig).then(c => c.rows);
+    users = [];
+        for (var i in result){
+        users.push(result[i].name);
+        }
+    ctx.status = 200;
+    ctx.body = users;
+});
+
+
+//router.post('/users/', async ctx => { bodyparse
+// ctx.request.body -- access to params
+// ctx.params // URL params, like :id
+//async (ctx, next) => {
+//    ctx.body = ctx.req;
+// })
 
 
 router.get('/posts', async ctx => {
@@ -31,7 +52,22 @@ router.get('/posts', async ctx => {
     ctx.body = posts;
 });
 
-router.get('/posts/:userid', async ctx => {
+router.get('/posts/:postid', async ctx => {
+    postid = ctx.params.postid;
+    var queryConfig = {
+    text: 'SELECT * FROM posts WHERE id = $1;',
+    values: [postid]
+  };
+      result = await database.query(queryConfig).then(c => c.rows);
+    posts = [];
+        for (var i in result){
+        posts.push(result[i].body);
+        }
+    ctx.status = 200;
+    ctx.body = posts;
+});
+
+router.get('/user-posts/:userid', async ctx => {
     userid = ctx.params.userid;
     var queryConfig = {
     text: 'SELECT * FROM posts WHERE userid = $1;',
@@ -45,8 +81,6 @@ router.get('/posts/:userid', async ctx => {
     ctx.status = 200;
     ctx.body = posts;
 });
-
-
 
 
 router.get('/test', async ctx => {
