@@ -21,6 +21,7 @@
     "enforce-node-path": "^1.0.0",
     "http-status": "^1.4.0",
     "koa": "^2.6.2",
+    "koa-body": "^4.1.1",
     "koa-bodyparser": "^4.2.1",
     "koa-cors": "0.0.16",
     "koa-logger": "^3.2.1",

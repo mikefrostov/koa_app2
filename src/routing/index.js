@@ -1,7 +1,7 @@
 const Router = require('koa-router')
 const database = require('database')
 const HttpStatus = require("http-status");
-
+const koaBody = require('koa-body');
 
 const router = Router()
 
@@ -33,12 +33,21 @@ router.get('/users/:userid', async ctx => {
 });
 
 
-//router.post('/users/', async ctx => { bodyparse
+router.post('/users/:name', async ctx => {
+
 // ctx.request.body -- access to params
 // ctx.params // URL params, like :id
 //async (ctx, next) => {
-//    ctx.body = ctx.req;
-// })
+    newname = ctx.params.name;
+    var queryConfig = {
+    text: 'INSRT INTO users (name) VALUES ($1);',
+    values: [newname]
+  };
+      result = await database.query(queryConfig);
+    ctx.status = 200;
+    ctx.body = result;
+
+});
 
 
 router.get('/posts', async ctx => {
@@ -83,7 +92,7 @@ router.get('/user-posts/:userid', async ctx => {
 });
 
 
-router.get('/test', async ctx => {
+router.get('/dbcontest', async ctx => {
   ctx.body = await database.query('SELECT 1 + 1 AS result')
     .then(c => c.rows[0].result)
 })
