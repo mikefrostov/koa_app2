@@ -34,25 +34,30 @@ router.get('/users/:userid', async ctx => {
 
 
 router.post('/users/:name', async ctx => {
-
-// ctx.request.body -- access to params
-// ctx.params // URL params, like :id
-//async (ctx, next) => {
     newname = ctx.params.name;
     var queryConfig = {
-    text: 'INSRT INTO users (name) VALUES ($1);',
+    text: 'INSERT INTO users (name) VALUES ($1);',
     values: [newname]
   };
-      result = await database.query(queryConfig);
-    ctx.status = 200;
-    ctx.body = result;
+      result = await database.query(queryConfig); 
+      ctx.status = 200;
+      ctx.body = result;
 
 });
 
+//router.put('/users/:name', async ctx => {
+//    newname = ctx.params.name;
+//   var queryConfig = {
+//    text: 'INSERT INTO users (name) VALUES ($1);',
+//    values: [newname]
+//  };
+//      result = await database.query(queryConfig);
+//      ctx.status = 200;
+//      ctx.body = result;
+//});
 
 router.get('/posts', async ctx => {
     result = await database.query('SELECT * FROM posts;').then(c => c.rows); //.then(c => c.rows[0]);
-
     posts = [];
 	for (var i in result){
         posts.push(result[i].body);
@@ -76,6 +81,42 @@ router.get('/posts/:postid', async ctx => {
     ctx.body = posts;
 });
 
+
+router.post('/posts/:post', async ctx => {
+    newpost = ctx.params.post;
+    defaultuser = '1';
+    var queryConfig = {
+    text: 'INSERT INTO posts (userid, body) VALUES ($1, $2);',
+    values: [defaultuser, newpost]
+  };
+      result = await database.query(queryConfig);
+      ctx.status = 200;
+      ctx.body = result;
+
+});
+
+
+
+router.post('/posts/:userid/:post', async ctx => {
+    newpost = ctx.params.post;
+    userid = ctx.params.userid;
+    var queryConfig = {
+    text: 'INSERT INTO posts (userid, body) VALUES ($1, $2);',
+    values: [userid, newpost]
+  };
+      result = await database.query(queryConfig);
+      ctx.status = 200;
+//      ctx.body = result;
+      ctx.body = ctx.origin;
+
+
+});
+
+
+
+
+
+
 router.get('/user-posts/:userid', async ctx => {
     userid = ctx.params.userid;
     var queryConfig = {
@@ -92,7 +133,7 @@ router.get('/user-posts/:userid', async ctx => {
 });
 
 
-router.get('/dbcontest', async ctx => {
+router.get('/dbconntest', async ctx => {
   ctx.body = await database.query('SELECT 1 + 1 AS result')
     .then(c => c.rows[0].result)
 })

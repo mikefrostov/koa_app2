@@ -13,7 +13,7 @@ pgm.createTable('users', {
     }
   });
   pgm.createTable('posts', {
-    id: {type: serial, notNull: true, primaryKey: true},
+    id: {type: 'serial', notNull: true, primaryKey: true},
     userid: {
       type: 'integer',
       notNull: true,
