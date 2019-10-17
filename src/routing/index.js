@@ -6,7 +6,7 @@ const koaBody = require('koa-body');
 const router = Router()
 
 
-// users api
+//     --------------------------- Users
 //     get all users
 router.get('/users', async ctx => {
     result = await database.query('SELECT * FROM users;').then(c => c.rows); //.then(c => c.rows[0]);
@@ -77,19 +77,14 @@ router.put('/users/:name/:newname', async ctx => {
 
 
 
-// posts api
+// --------------------------- posts 
 
 //     get list of all posts
 router.get('/posts', async ctx => {
-    result = await database.query('SELECT * FROM posts;').then(c => c.rows); //.then(c => c.rows[0]);
-    posts = [];
-	for (var i in result){
-        posts.push(result[i].body);
-	}
+    result = await database.query('SELECT * FROM posts;').then(c => c.rows);
     ctx.status = 200;
-    ctx.body = posts;
+    ctx.body = result;
 });
-
 
 // get post by postid 
 router.get('/posts/:postid', async ctx => {
@@ -152,6 +147,16 @@ router.post('/posts/:post', async ctx => {
       ctx.body = result;
 });
 
+// change post body
+router.put('/posts/', async ctx => {
+	body = ctx.params.post;
+        defaultuser = '1';
+//	var queryConfig = {
+//        text: 'UPDATE posts SET body = $1, WHERE posts.id = $2;',
+//    values: [body, postid]
+//	};
+        ctx.body = ctx.params;
+});
 
 //     add post to a particular user
 router.post('/posts/:userid/:post', async ctx => {
