@@ -9,6 +9,10 @@ Simple CRUD application that holds a list of posts.
 git clone https://github.com/mikefrostov/koa_app2.git
 cd koa_app2/
 npm install
+cd frontend/
+npm install
+npm run build
+cd ..
 ./postgrescontainer.sh
 ./databasemigration.sh
 npm run watch 
