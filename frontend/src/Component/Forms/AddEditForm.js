@@ -4,7 +4,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 class AddEditForm extends React.Component {
   state = {
     id: 0,
-    post: '',
+    post: ''
   }
 
   onChange = e => {
@@ -14,12 +14,13 @@ class AddEditForm extends React.Component {
   submitFormAdd = e => {
     e.preventDefault()
     fetch('http://localhost:3000/posts', {
-      method: 'post',
+      method: 'POST',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        post: this.state.post,
+        post: this.state.post
       })
     })
       .then(response => response.json())
@@ -37,19 +38,19 @@ class AddEditForm extends React.Component {
   submitFormEdit = e => {
     e.preventDefault()
     fetch('http://localhost:3000/posts', {
-      method: 'put',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      method: 'PUT',
+      mode: 'cors',
+      cache: 'default',
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         id: this.state.id,
-        post: this.state.first,
+        post: this.state.post
       })
     })
       .then(response => response.json())
       .then(item => {
         if(Array.isArray(item)) {
-          // console.log(item[0])
+           console.log(item[0])
           this.props.updateState(item[0])
           this.props.toggle()
         } else {
@@ -58,7 +59,7 @@ class AddEditForm extends React.Component {
       })
       .catch(err => console.log(err))
   }
-
+  
   componentDidMount(){
     // if item exists, populate the state with proper data
     if(this.props.item){
@@ -71,8 +72,8 @@ class AddEditForm extends React.Component {
     return (
       <Form onSubmit={this.props.item ? this.submitFormEdit : this.submitFormAdd}>
         <FormGroup>
-          <Label for="first">Post</Label>
-          <Input type="text" name="first" id="first" onChange={this.onChange} value={this.state.first === null ? '' : this.state.first} />
+          <Label for="post">Post</Label>
+          <Input type="text" name="post" id="post" onChange={this.onChange} value={this.state.post === null ? '' : this.state.post} />
         </FormGroup>
         <Button>Submit</Button>
       </Form>

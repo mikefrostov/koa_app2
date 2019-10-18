@@ -69,7 +69,8 @@ class App extends Component {
 			<Row>
 			<Col>
 			<DataTable items={this.state.items} updateState={this.updateState} deleteItemFromState={this.deleteItemFromState} />
-          </Col>
+                        <ModalForm buttonLabel="Add Item" addItemToState={this.addItemToState}/>
+		</Col>
         </Row>
       </Container>
     )

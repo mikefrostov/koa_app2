@@ -21,16 +21,7 @@ app.use(BodyParser());
 app.use(Logger());
 app.use(cors());
 
-//const static_pages = new Koa();
-//static_pages.use(serve(__dirname + "/frontend/build")); //serve the build directory
-//app.use(mount("/", static_pages));
-
 app.use(serve('frontend/build'));
-
-//app.use(function* index() {
-//    console.log('index page');
-//    yield send(this, 'frontend/build/index.html');
-//});
 
 exports.start = async function () {
   try {
