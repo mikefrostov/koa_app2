@@ -9,11 +9,9 @@ class DataTable extends Component {
     if(confirmDelete){
       fetch('http://localhost:3000/posts', {
       method: 'delete',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        id
+          id
       })
     })
       .then(response => response.json())
