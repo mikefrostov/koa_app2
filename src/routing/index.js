@@ -8,7 +8,7 @@ const router = Router()
 
 //  get posts
 router.get('/posts', async ctx => {
-    result = await database.query('SELECT * FROM posts;').then(c => c.rows);
+    result = await database.query('SELECT * FROM posts ORDER BY id;').then(c => c.rows);
     ctx.status = 200;
     ctx.body = result;
 });
@@ -21,9 +21,12 @@ router.post('/posts', koaBody(), async ctx => {
             text: 'INSERT INTO posts (userid, body) VALUES ($1, $2);',
             values: [id, post]
         };
+        result1 = await database.query(queryConfig);
+        
+        result = await database.query('SELECT * FROM posts ORDER BY id;').then(c => c.rows);
         ctx.status = 200;
-        result = await database.query(queryConfig);
         ctx.body = result;
+
 });
 
 // update post
@@ -34,9 +37,12 @@ router.put('/posts', koaBody(), async ctx => {
             text: 'UPDATE posts SET body = $1 WHERE posts.id = $2;',
             values: [post, id]
         };
+        
+        result1 = await database.query(queryConfig);
+        result = await database.query('SELECT * FROM posts ORDER BY id;').then(c => c.rows);
         ctx.status = 200;
-        result = await database.query(queryConfig);
         ctx.body = result;
+
 });
 
 // delete post
@@ -46,9 +52,11 @@ router.del('/posts', koaBody({ strict: false }), async ctx => {
     text: 'DELETE FROM posts WHERE posts.id = $1;',
     values: [id]
   };
-     result = await database.query(queryConfig);
-       ctx.status = 200;
-       ctx.body = result;
+       result1 = await database.query(queryConfig);
+       result = await database.query('SELECT * FROM posts ORDER BY id;').then(c => c.rows);
+        ctx.status = 200;
+        ctx.body = result;
+
 });
 
 module.exports = router
