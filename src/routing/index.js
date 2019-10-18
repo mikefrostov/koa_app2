@@ -16,14 +16,17 @@ router.get('/posts', async ctx => {
 // create post
 router.post('/posts', koaBody(), async ctx => {
         post = JSON.parse(JSON.stringify(ctx.request.body.post));
-        id = '1';   // no user login implemented yet, default user = '1'
+        userid = '1';   // no user login implemented yet, default user = '1'
         var queryConfig = {
-            text: 'INSERT INTO posts (userid, body) VALUES ($1, $2);',
-            values: [id, post]
+            text: 'INSERT INTO posts (userid, body) VALUES ($1, $2) RETURNING id',
+            values: [userid, post]
         };
-        result1 = await database.query(queryConfig);
-        
-        result = await database.query('SELECT * FROM posts ORDER BY id;').then(c => c.rows);
+        result1 = await database.query(queryConfig).then(c => c.rows[0].id);
+	var queryConfig2 = {
+	    text: 'SELECT * FROM posts WHERE posts.id = $1;',
+	    values: [result1]
+	};
+        result = await database.query(queryConfig2).then(c => c.rows);
         ctx.status = 200;
         ctx.body = result;
 
