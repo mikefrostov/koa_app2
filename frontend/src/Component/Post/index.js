@@ -17,7 +17,7 @@ export default class Post extends Component {
 
   async loadPosts()
   {
-    const promise = await axios.get("http://localhost:3000/posts");
+    const promise = await axios.get("http://koareact.cheapestdomainever.club:3000/posts");
     const status = promise.status;
     if(status===200)
     {

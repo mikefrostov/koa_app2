@@ -23,7 +23,7 @@ class App extends Component {
     }
 
     getItems(){
-	    fetch('http://localhost:3000/posts')
+	    fetch('http://koareact.morozovme.com/posts')
 		    .then(response => response.json())
 		    .then(items => this.setState({items}))
 		    .catch(err => console.log(err))
