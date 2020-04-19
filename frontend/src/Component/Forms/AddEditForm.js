@@ -13,7 +13,7 @@ class AddEditForm extends React.Component {
 
   submitFormAdd = e => {
     e.preventDefault()
-    fetch('http://localhost:3000/posts', {
+    fetch('http://koareact.morozovme.com/posts', {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -37,7 +37,7 @@ class AddEditForm extends React.Component {
 
   submitFormEdit = e => {
     e.preventDefault()
-    fetch('http://localhost:3000/posts', {
+    fetch('http://koareact.morozovme.com/posts', {
       method: 'PUT',
       mode: 'cors',
       cache: 'default',
