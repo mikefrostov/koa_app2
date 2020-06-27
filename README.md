@@ -1,3 +1,7 @@
+# A to-do list app make with koajs reactjs postgresql 
+This app runs in one container, encopasing both pre-generated reactjs-based frontend files, serving as a 'pub' folder and koa-js based backend routes. 
+As opposed to "koa_app" repository, this thing doesn't have list generation page and is not "microservices-based" architecture rather it is a solid app.  
+
 # koa_app2
 ver 0.2.0
 
